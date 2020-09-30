@@ -30,7 +30,7 @@
           <div class="temp">
             <p class="w-title">Tempereture</p>
             <div class="value">
-              <span>12</span>
+              <span>{{$store.state.main.temp}}</span>
               <celcius color="black" height="30" width="30"></celcius>
             </div>
           </div>

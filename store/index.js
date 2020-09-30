@@ -6,6 +6,14 @@ export const state = () => ({
         id: '800',
         main: '',
     },
+    main: {
+        temp: 0,
+        feels_like: 0,
+        temp_min: 0,
+        temp_max: 0,
+        pressure: 0,
+        humidity: 0
+    },
     weatherDescription: '',
     weatherIcon:'',
 })
@@ -15,7 +23,8 @@ export const mutations = {
         state.showlang = !state.showlang;
     },
     updateWeather(state, data) {
-        state.weather = data;
+        state.weather = data.weather[0];
+        state.main = data.main;
     },
 
 }
@@ -41,7 +50,7 @@ export const actions = {
             }
         });
         if (res.status === 200) {
-            commit('updateWeather', res.data.weather[0]);
+            commit('updateWeather', res.data);
         }
         return res.status;
     }
