@@ -1,6 +1,7 @@
 <template>
-  <div class="echarts">
+  <div>
     <v-chart
+    class="echarts"
       :option="bar"
       :loading="loading"
       @ready="onReady"
