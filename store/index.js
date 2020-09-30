@@ -1,6 +1,6 @@
 export const state = () => ({
     showlang: false,
-    screen: 'dashboard',
+    screen: 'map',
     lang: 'en',
     city: 'nairobi',
     dates: [],
@@ -25,7 +25,7 @@ export const state = () => ({
         humidity: 0
     },
     weatherDescription: '',
-    weatherIcon:'',
+    weatherIcon: '',
 })
 
 export const mutations = {
@@ -60,19 +60,19 @@ export const actions = {
             }
         });
 
-        function  _to12(dt) {
+        function _to12(dt) {
             var hours = dt.getHours();
             var AmOrPm = hours >= 12 ? "PM" : "AM";
             hours = hours % 12 || 12;
             var finalTime = hours + AmOrPm;
             return finalTime;
-         }
+        }
 
         var dates = res.data.list.map(list => {
             let dt = new Date(list.dt_txt);
             return dt.getMonth() + "/" + dt.getDate() + "@" + _to12(dt);
         });
-  
+
         var temps = res.data.list.map(list => {
             return list.main.temp;
         });
@@ -81,7 +81,7 @@ export const actions = {
         commit('updateCity', city);
         return data;
     },
-    async getWeather({ commit, state}, city) {
+    async getWeather({ commit, state }, city) {
         let res = await this.$axios.get("https://api.openweathermap.org/data/2.5/weather", {
             params: {
                 q: city,
@@ -96,7 +96,7 @@ export const actions = {
         }
         return res.status;
     },
-    async switchLang({ commit, state}, lang) {
+    async switchLang({ commit, state }, lang) {
         let res = await this.$axios.get("https://api.openweathermap.org/data/2.5/weather", {
             params: {
                 q: state.city,

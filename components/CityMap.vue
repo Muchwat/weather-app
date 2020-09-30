@@ -27,7 +27,7 @@
 export default {
   data() {
     return {
-      cKey: '0323',
+      cKey: "0323",
       currentLocation: {},
       locations: [
         {
@@ -46,17 +46,18 @@ export default {
   computed: {
     coordinates() {
       return this.$store.state.coordinates;
-    },
+    }
   },
   watch: {
     coordinates(newCoord, oldCoord) {
-      this.locations = [{
+      this.locations = [
+        {
           lat: newCoord.lat,
           lng: newCoord.lon
-        }];
-        this.cKey = Math.random();
-      console.log(`new ${newCoord.lat} ${newCoord.lon}`);
-    },
-  },
+        }
+      ];
+      this.cKey = Math.random();
+    }
+  }
 };
 </script>

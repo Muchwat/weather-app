@@ -13,16 +13,28 @@
           />
         </div>
         <div class="side-bar-main">
+          <div class="city">
+            <p>{{ $store.state.name }}</p>
+          </div>
           <div class="w-icon">
             <center>
               <!-- <rain color="#008cff" height="150" width="150"></rain> -->
-              <div style="height:150px; width:150px;" >
-                 <object type="image/svg+xml" style="fill:red;" :data="require(`~/assets/images/${$store.state.weather.id}.svg`)">
-                  <img :src="require(`~/assets/images/${$store.state.weather.id}.svg`)" />
+              <div style="height:150px; width:150px;">
+                <object
+                  type="image/svg+xml"
+                  style="fill:red;"
+                  :data="
+                    require(`~/assets/images/${$store.state.weather.id}.svg`)
+                  "
+                >
+                  <img
+                    :src="
+                      require(`~/assets/images/${$store.state.weather.id}.svg`)
+                    "
+                  />
                 </object>
               </div>
-             
-            </center>
+            </center><br>
             <p class="w-title">{{ $store.state.weather.main }}</p>
             <p class="w-desc">{{ $store.state.weather.description }}</p>
           </div>
@@ -30,12 +42,9 @@
           <div class="temp">
             <p class="w-title">Tempereture</p>
             <div class="value">
-              <span>{{$store.state.main.temp}}</span>
+              <span>{{ $store.state.main.temp }}</span>
               <celcius color="black" height="30" width="30"></celcius>
             </div>
-          </div>
-          <div class="city">
-            <p>{{$store.state.name}}</p>
           </div>
         </div>
       </div>
@@ -95,7 +104,7 @@
 export default {
   data() {
     return {
-      city: 'nairobi',
+      city: "nairobi",
       chart: null,
       dates: [],
       temps: [],
@@ -125,7 +134,7 @@ export default {
     },
     async setLang(lang) {
       let response = await this.$store.dispatch("switchLang", lang);
-        console.log(this.city, response);
+      console.log(this.city, response);
     },
     async fetchWeather(e) {
       if (e.key == "Enter") {
@@ -134,31 +143,38 @@ export default {
       }
     },
     fetchForecast() {
-      this.$store.commit('updateScreen', 'chart');
+      this.$store.commit("updateScreen", "chart");
       this.$store.dispatch("getForecast", this.city);
     }
+  },
+  mounted() {
+    this.$store.dispatch("getWeather", this.city);
+    this.$store.dispatch("getForecast", this.city);
   }
 };
 </script>
 
 <style lang="scss">
 svg {
+  fill: #c253ff;
+
+  circle,
+  line,
+  path {
+    fill: #c253ff;
+  }
+
+  &:hover {
     fill: #c253ff;
 
-    circle, line, path {
-        fill:  #c253ff;
+    circle,
+    line,
+    path {
+      fill: #c253ff;
     }
-
-    &:hover {
-        fill:  #c253ff;
-
-        circle, line, path {
-            fill:  #c253ff;
-        }
-    }
+  }
 }
 @include desktop {
-
   .container {
     height: 100vh;
     width: 100%;
@@ -184,28 +200,28 @@ svg {
       border-radius: 10px;
 
       .tooltip {
-    position: relative;
-    display: inline-block;
-  }
+        position: relative;
+        display: inline-block;
+      }
 
-  .tooltip .tooltiptext {
-    visibility: hidden;
-    width: 120px;
-    background-color: #008cff;
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-    margin-top: 5px;
+      .tooltip .tooltiptext {
+        visibility: hidden;
+        width: 120px;
+        background-color: #008cff;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 0;
+        margin-top: 5px;
 
-    /* Position the tooltip */
-    position: absolute;
-    z-index: 1;
-  }
+        /* Position the tooltip */
+        position: absolute;
+        z-index: 1;
+      }
 
-  .tooltip:hover .tooltiptext {
-    visibility: visible;
-  }
+      .tooltip:hover .tooltiptext {
+        visibility: visible;
+      }
 
       .side-menu {
         background: white;

@@ -3,9 +3,6 @@
     <v-chart
       class="echarts"
       :option="bar"
-      :loading="loading"
-      @ready="onReady"
-      @click="onClick"
       style="width: 700px; height: 400px;"
     />
   </div>
@@ -76,15 +73,6 @@ export default {
           itemStyle: {
             color: "rgb(255, 70, 131)"
           },
-          // areaStyle: {
-          //     color: this.graphic.LinearGradient(0, 0, 0, 1, [{
-          //         offset: 0,
-          //         color: 'rgb(255, 158, 68)'
-          //     }, {
-          //         offset: 1,
-          //         color: 'rgb(255, 70, 131)'
-          //     }])
-          // },
           data: []
         }
       ]
@@ -100,32 +88,12 @@ export default {
   },
   watch: {
     dates(newDates, oldCount) {
-      console.log(`dates ${newDates}`);
       this.bar.xAxis.data = newDates;
     },
     temps(newTemps, oldCount) {
-      console.log(`temps ${newTemps}`);
       this.bar.series[0].data = newTemps;
     }
   },
-  methods: {
-    doRandom() {
-      const that = this;
-      let data = [];
-      for (let i = 0, min = 5, max = 99; i < 6; i++) {
-        data.push(Math.floor(Math.random() * (max + 1 - min) + min));
-      }
-      that.loading = !that.loading;
-      that.bar.series[0].data = data;
-    },
-    onReady(instance, ECharts) {
-      this.graphic = ECharts.graphic;
-      console.log(instance, ECharts.graphic);
-    },
-    onClick(event, instance, ECharts) {
-      console.log(arguments);
-    }
-  }
 };
 </script>
  
