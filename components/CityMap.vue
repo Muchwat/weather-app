@@ -27,7 +27,7 @@
 export default {
   data() {
     return {
-      cKey: "0323",
+      cKey: Math.random(),
       currentLocation: {},
       locations: [
         {

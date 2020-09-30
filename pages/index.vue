@@ -18,8 +18,7 @@
           </div>
           <div class="w-icon">
             <center>
-              <!-- <rain color="#008cff" height="150" width="150"></rain> -->
-              <div style="height:150px; width:150px;">
+              <div class="w-object">
                 <object
                   type="image/svg+xml"
                   style="fill:red;"
@@ -37,6 +36,7 @@
             </center><br>
             <p class="w-title">{{ $store.state.weather.main }}</p>
             <p class="w-desc">{{ $store.state.weather.description }}</p>
+            
           </div>
           <br />
           <div class="temp">
@@ -46,6 +46,10 @@
               <celcius color="black" height="30" width="30"></celcius>
             </div>
           </div>
+          <div class="disclaimer">
+            <p>For more features and better experience please use a laptop or desktop computer. Thanks!</p>
+          </div>
+          
         </div>
       </div>
       <div class="content">
@@ -256,6 +260,9 @@ svg {
         .side-bar-main {
           .w-icon {
             margin-top: 20px;
+            .w-object {
+              height:150px; width:150px;
+            }
           }
           .w-title {
             margin-left: 60px;
@@ -278,6 +285,9 @@ svg {
             margin-left: 60px;
             font-size: 2rem;
             font-weight: 500;
+          }
+          .disclaimer {
+            display: none;
           }
         }
       }
@@ -408,7 +418,85 @@ svg {
 }
 @include phone {
   .container {
-    background: red;
+    .w-app { 
+      display: block;
+      .content {
+        display: none;
+      }
+      .side-menu {
+        width: 100%;
+        height: 100%;
+        padding: 16px;
+        .search-bar {
+          width: 100%;
+          height: 40px;
+          border-radius: 20px;
+          border: 1px solid #ddd;
+          line-height: 40px;
+          margin: 16px auto;
+
+          display: inline-grid;
+          grid-template-columns: 40px auto;
+          .search-icon {
+            place-self: center;
+          }
+          .search-input {
+            width: 100%;
+            font: 400 16px "Varela Round", sans-serif;
+            border: 0;
+            box-sizing: border-box;
+            outline: none;
+            background: transparent;
+            cursor: pointer;
+          }
+        }
+
+        .side-bar-main {
+          .city {
+            font-size: 40px;
+            font-weight: 00;
+          }
+
+          .w-icon {
+            .w-object {
+              height:130px; width:130px;
+            }
+          }
+          .w-title {
+            margin: 0 auto;
+            font-size: 1rem;
+            font-weight: 500;
+          }
+          .w-desc {
+            margin: 16px auto;
+            font-size: 0.8rem;
+            font-weight: 500;
+            opacity: .6;
+          }
+          .temp {
+            .value {
+              font-size: 4rem;
+              font-weight: 300;
+              margin: 16px auto;
+            }
+          }
+          .city {
+            margin: 16px auto;
+            font-size: 2rem;
+            font-weight: 500;
+          }
+          .disclaimer {
+            display: block;
+            border-left: 5px solid #9449fe;
+            border-radius: 2.5px;
+            p {
+              font-size: .8rem;
+              padding-left: .5rem;
+            }
+          }
+        }
+      }
+    }
   }
 }
 </style>
