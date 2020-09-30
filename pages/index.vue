@@ -15,10 +15,16 @@
         <div class="side-bar-main">
           <div class="w-icon">
             <center>
-              <rain color="#008cff" height="150" width="150"></rain>
+              <!-- <rain color="#008cff" height="150" width="150"></rain> -->
+              <div style="height:150px; width:150px;" >
+                 <object type="image/svg+xml" style="fill:red;" :data="require(`~/assets/images/${$store.state.weather.id}.svg`)">
+                  <img :src="require(`~/assets/images/${$store.state.weather.id}.svg`)" />
+                </object>
+              </div>
+             
             </center>
-            <p class="w-title">Rain</p>
-            <p class="w-desc">Light rain</p>
+            <p class="w-title">{{ $store.state.weather.main }}</p>
+            <p class="w-desc">{{ $store.state.weather.description }}</p>
           </div>
           <br />
           <div class="temp">
@@ -77,8 +83,8 @@
           </div>
         </div>
         <div class="main-content">
-          <!-- <line-chart></line-chart> -->
-          <city-map></city-map>
+          <line-chart></line-chart>
+          <!-- <city-map></city-map> -->
         </div>
       </div>
     </div>
@@ -99,10 +105,10 @@ export default {
   },
   async asyncData({ $axios }) {
     let response = await $axios.$get(
-      "https://api.openweathermap.org/data/2.5/forecast",
+      "https://api.openweathermap.org/data/2.5/weather",
       {
         params: {
-          q: "cairo",
+          q: "nairobi",
           units: "imperial",
           appid: "91afaf2ec7d70c0d06fb15ab8a3e4d81"
         }
@@ -125,9 +131,15 @@ export default {
       return finalTime;
     },
     async fetchWeather(e) {
-      console.log(event.key);
       if (e.key == "Enter") {
         let response = await this.$store.dispatch("getWeather", this.city);
+        console.log(this.city, response);
+      }
+    },
+    async fetchForecast(e) {
+      if (e.key == "Enter") {
+        let response = await this.$store.dispatch("getForecast", this.city);
+
         this.dates = response.data.list.map(list => {
           let dt = new Date(list.dt_txt);
           return dt.getMonth() + "/" + dt.getDate() + "@" + this._to12(dt);
@@ -136,6 +148,8 @@ export default {
         this.temps = response.data.list.map(list => {
           return list.main.temp;
         });
+
+        console.log(this.dates);
         console.log(this.temps);
       }
     }
@@ -164,6 +178,21 @@ export default {
 </script>
 
 <style lang="scss">
+svg {
+        fill: #c253ff;
+
+        circle, line, path {
+            fill:  #c253ff;
+        }
+
+        &:hover {
+            fill:  #c253ff;
+
+            circle, line, path {
+                fill:  #c253ff;
+            }
+        }
+    }
 @include desktop {
   .tooltip {
     position: relative;
@@ -275,125 +304,123 @@ export default {
         border-top-right-radius: 10px;
         border-bottom-right-radius: 10px;
         .nav-bar {
-        height: 72px;
-        width: 700px;
-        border-top-right-radius: 10px;
-        background: #dd4cfc;
-        .lang {
-          width: 100px;
-          height: 30px;
-          border-radius: 15px;
-          background: white;
-          float: left;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          margin: 16px;
-          box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
-          cursor: pointer;
-          .lang-title {
-            // display: inline-block;
-            // vertical-align: middle;
-          }
-          .lang-dropdown {
-            ul {
-              list-style: none;
-              padding: 0;
-              margin: 0;
-              li {
-                cursor: pointer;
-                padding: 4px;
-              }
-            }
-            position: absolute;
+          height: 72px;
+          width: 700px;
+          border-top-right-radius: 10px;
+          background: #dd4cfc;
+          .lang {
+            width: 100px;
+            height: 30px;
+            border-radius: 15px;
             background: white;
-            border-radius: 10px;
-            z-index: 2;
-            transform: translateY(8rem);
-            padding-left: $padding-8;
-            padding-right: $padding-8;
-            box-shadow: -1px 0px 13px -5px rgba(0, 0, 0, 0.49);
+            float: left;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 16px;
+            box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+            .lang-title {
+              // display: inline-block;
+              // vertical-align: middle;
+            }
+            .lang-dropdown {
+              ul {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                li {
+                  cursor: pointer;
+                  padding: 4px;
+                }
+              }
+              position: absolute;
+              background: white;
+              border-radius: 10px;
+              z-index: 2;
+              transform: translateY(8rem);
+              padding-left: $padding-8;
+              padding-right: $padding-8;
+              box-shadow: -1px 0px 13px -5px rgba(0, 0, 0, 0.49);
+            }
           }
-        }
-        .celcius {
-          float: left;
-          margin-top: 16px;
-          margin-right: 16px;
-          background: white;
-          width: 30px;
-          height: 30px;
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
-          cursor: pointer;
-        }
-        .fahrenheit {
-          float: left;
-          margin-top: 16px;
-          margin-right: 16px;
-          background: white;
-          width: 30px;
-          height: 30px;
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
-          cursor: pointer;
-        }
-        .forecast {
-          box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
-          float: left;
-          margin-top: 16px;
-          background: white;
-          margin-right: 16px;
-          width: 30px;
-          height: 30px;
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          cursor: pointer;
-        }
-        .marker {
-          box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
-          float: left;
-          margin-top: 16px;
-          margin-right: 16px;
-          background: white;
-          width: 30px;
-          height: 30px;
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          cursor: pointer;
-        }
-        .avatar {
-          float: right;
-          width: 40px;
-          height: 40px;
-          border-radius: 50%;
-          background: white;
-          margin: 16px;
-          img {
-            vertical-align: middle;
+          .celcius {
+            float: left;
+            margin-top: 16px;
+            margin-right: 16px;
+            background: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+          }
+          .fahrenheit {
+            float: left;
+            margin-top: 16px;
+            margin-right: 16px;
+            background: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+          }
+          .forecast {
+            box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
+            float: left;
+            margin-top: 16px;
+            background: white;
+            margin-right: 16px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+          }
+          .marker {
+            box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
+            float: left;
+            margin-top: 16px;
+            margin-right: 16px;
+            background: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+          }
+          .avatar {
+            float: right;
             width: 40px;
             height: 40px;
             border-radius: 50%;
+            background: white;
+            margin: 16px;
+            img {
+              vertical-align: middle;
+              width: 40px;
+              height: 40px;
+              border-radius: 50%;
+            }
           }
         }
+        .main-content {
+          height: 428px;
+          border-top-right-radius: 10px;
+          border-bottom-right-radius: 10px;
+        }
       }
-      .main-content {
-        height: 428px;
-        border-top-right-radius: 10px;
-        border-bottom-right-radius: 10px;
-      }
-      }
-
-      
     }
   }
 }
