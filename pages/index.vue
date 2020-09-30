@@ -35,7 +35,7 @@
             </div>
           </div>
           <div class="city">
-            <p>New York</p>
+            <p>{{$store.state.name}}</p>
           </div>
         </div>
       </div>
@@ -65,14 +65,14 @@
           </div>
 
           <div class="tooltip">
-            <div class="forecast">
+            <div class="forecast" @click="fetchForecast()">
               <forecast color="black" height="11" width="11"></forecast>
             </div>
             <span class="tooltiptext">Forecast</span>
           </div>
 
           <div class="tooltip">
-            <div class="marker">
+            <div class="marker" @click="$store.commit('updateScreen', 'map')">
               <gmarker color="black" height="12" width="12"></gmarker>
             </div>
             <span class="tooltiptext">Google Map</span>
@@ -83,8 +83,8 @@
           </div>
         </div>
         <div class="main-content">
-          <line-chart></line-chart>
-          <!-- <city-map></city-map> -->
+          <line-chart v-show="$store.state.screen == 'chart'"></line-chart>
+          <city-map v-show="$store.state.screen == 'map'"></city-map>
         </div>
       </div>
     </div>
@@ -95,7 +95,7 @@
 export default {
   data() {
     return {
-      city: "",
+      city: 'nairobi',
       chart: null,
       dates: [],
       temps: [],
@@ -123,100 +123,41 @@ export default {
         (parseFloat(d.main.temp) - 273.15) * 1.8 + 32
       );
     },
-    _to12(dt) {
-      var hours = dt.getHours(); // gives the value in 24 hours format
-      var AmOrPm = hours >= 12 ? "PM" : "AM";
-      hours = hours % 12 || 12;
-      var finalTime = hours + AmOrPm;
-      return finalTime;
+    async setLang(lang) {
+      let response = await this.$store.dispatch("switchLang", lang);
+        console.log(this.city, response);
     },
     async fetchWeather(e) {
       if (e.key == "Enter") {
-        let response = await this.$store.dispatch("getWeather", this.city);
-        console.log(this.city, response);
+        this.$store.dispatch("getWeather", this.city);
+        this.$store.dispatch("getForecast", this.city);
       }
     },
-    async fetchForecast(e) {
-      if (e.key == "Enter") {
-        let response = await this.$store.dispatch("getForecast", this.city);
-
-        this.dates = response.data.list.map(list => {
-          let dt = new Date(list.dt_txt);
-          return dt.getMonth() + "/" + dt.getDate() + "@" + this._to12(dt);
-        });
-
-        this.temps = response.data.list.map(list => {
-          return list.main.temp;
-        });
-
-        console.log(this.dates);
-        console.log(this.temps);
-      }
+    fetchForecast() {
+      this.$store.commit('updateScreen', 'chart');
+      this.$store.dispatch("getForecast", this.city);
     }
-    // fetchWeather() {
-    //   this.$axios
-    //     .get("https://api.openweathermap.org/data/2.5/forecast", {
-    //       params: {
-    //         q: "cairo",
-    //         units: "imperial",
-    //         appid: "91afaf2ec7d70c0d06fb15ab8a3e4d81"
-    //       }
-    //     })
-    //     .then(response => {
-    //       this.dates = response.data.list.map(list => {
-    //         return list.dt_txt;
-    //       });
-
-    //       this.temps = response.data.list.map(list => {
-    //         return list.main.temp;
-    //       });
-    //     })
-    //     .catch(err => console.log(err));
-    // }
   }
 };
 </script>
 
 <style lang="scss">
 svg {
-        fill: #c253ff;
+    fill: #c253ff;
+
+    circle, line, path {
+        fill:  #c253ff;
+    }
+
+    &:hover {
+        fill:  #c253ff;
 
         circle, line, path {
             fill:  #c253ff;
         }
-
-        &:hover {
-            fill:  #c253ff;
-
-            circle, line, path {
-                fill:  #c253ff;
-            }
-        }
     }
+}
 @include desktop {
-  .tooltip {
-    position: relative;
-    display: inline-block;
-  }
-
-  .tooltip .tooltiptext {
-    visibility: hidden;
-    width: 120px;
-    background-color: #008cff;
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-    margin-top: 5px;
-
-    /* Position the tooltip */
-    position: absolute;
-    z-index: 1;
-  }
-
-  .tooltip:hover .tooltiptext {
-    visibility: visible;
-  }
 
   .container {
     height: 100vh;
@@ -241,6 +182,31 @@ svg {
       display: grid;
       grid-template-columns: 300px 700px;
       border-radius: 10px;
+
+      .tooltip {
+    position: relative;
+    display: inline-block;
+  }
+
+  .tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: #008cff;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    margin-top: 5px;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+  }
+
+  .tooltip:hover .tooltiptext {
+    visibility: visible;
+  }
+
       .side-menu {
         background: white;
         height: 500px;
