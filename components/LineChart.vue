@@ -6,6 +6,7 @@
       :loading="loading"
       @ready="onReady"
       @click="onClick"
+      style="width: 700px; height: 400px;"
     />
     <button @click="doRandom">Random</button>
   </div>
