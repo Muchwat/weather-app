@@ -1,0 +1,48 @@
+$colors: (
+    primary: #9449fe,
+    primary-light: lighten(#9449fe, 10%),
+    primary-fade: lighten(#9449fe, 38%),
+    dark: #252525,
+    border: #ddd,
+);
+
+$desktop: 1200px;
+$phone: 600px;
+$padding-16: 1rem;
+$padding-8: .5rem;
+$border-radius: 0.25rem;
+
+@function color($name) {
+    @return  map-get($colors, $name);
+}
+
+@mixin landscape {
+    @media screen and (orientation:landscape) {
+        @content;
+    }
+}
+
+@mixin portrait {
+    @media screen and (orientation:portrait) {
+        @content;
+    }
+}
+
+
+@mixin desktop {
+    @media only screen and (min-width: ($desktop + 1)) {
+        @content;
+    }
+}
+
+@mixin tablet {
+    @media only screen and (min-width: #{$phone + 1}) and (max-width: #{$desktop})  {
+        @content;
+    }
+}
+
+@mixin phone {
+    @media only screen and (max-width: #{$phone})  {
+        @content;
+    }
+}

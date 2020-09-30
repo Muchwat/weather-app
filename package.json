@@ -1,0 +1,38 @@
+{
+  "name": "weather-app",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate",
+    "test": "jest"
+  },
+  "config": {
+    "nuxt": {
+      "host": "192.168.100.95",
+      "port": "3000"
+    }
+  },
+  "dependencies": {
+    "@nuxtjs/axios": "^5.12.2",
+    "@nuxtjs/pwa": "^3.0.2",
+    "@nuxtjs/style-resources": "^1.0.0",
+    "apexcharts": "^3.21.0",
+    "core-js": "^3.6.5",
+    "echarts": "^4.9.0",
+    "nuxt": "^2.14.5",
+    "vue-apexcharts": "^1.6.0",
+    "vue-echarts-v3": "^2.0.1"
+  },
+  "devDependencies": {
+    "@vue/test-utils": "^1.1.0",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-jest": "^26.3.0",
+    "jest": "^26.4.2",
+    "node-sass": "^4.14.1",
+    "sass-loader": "^10.0.2",
+    "vue-jest": "^3.0.4"
+  }
+}
