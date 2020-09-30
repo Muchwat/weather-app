@@ -8,25 +8,17 @@
       @click="onClick"
       style="width: 700px; height: 400px;"
     />
-    <button @click="doRandom">Random</button>
   </div>
 </template>
  
 <script>
-var base = +new Date(1968, 9, 3);
-var oneDay = 24 * 3600 * 1000;
-var date = [];
+var date = ["8/30@9AM", "8/30@12PM", "8/30@3PM", "8/30@6PM", "8/30@9PM", "9/1@12AM", "9/1@3AM", "9/1@6AM", "9/1@9AM", "9/1@12PM", "9/1@3PM", "9/1@6PM", "9/1@9PM", "9/2@12AM", "9/2@3AM", "9/2@6AM", "9/2@9AM", "9/2@12PM", "9/2@3PM", "9/2@6PM", "9/2@9PM", "9/3@12AM", "9/3@3AM", "9/3@6AM", "9/3@9AM", "9/3@12PM", "9/3@3PM", "9/3@6PM", "9/3@9PM", "9/4@12AM", "9/4@3AM", "9/4@6AM", "9/4@9AM", "9/4@12PM", "9/4@3PM", "9/4@6PM", "9/4@9PM", "9/5@12AM", "9/5@3AM", "9/5@6AM"];
 
-var data = [Math.random() * 300];
+var data = [85.15, 97.07, 99.07, 84.52, 78.51, 75.38, 74.05, 78.64, 90.45, 96.75, 97.14, 82.51, 77.23, 75.45, 74.84, 80.29, 89.74, 95.16, 95.38, 80.96, 76.35, 74.34, 72.93, 75.94, 85.55, 93.33, 93.85, 78.26, 73.99, 71.69, 70.36, 75.02, 84.97, 93.81, 91.6, 78.17, 73.63, 71.29, 70.16, 74.55];
 
-for (var i = 1; i < 20000; i++) {
-    var now = new Date(base += oneDay);
-    date.push([now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/'));
-    data.push(Math.round((Math.random() - 0.5) * 20 + data[i - 1]));
-}
   export default {
     data: () => ({
-      loading: true,
+      loading: false,
       graphic: null,
       bar: {
     tooltip: {
@@ -37,7 +29,7 @@ for (var i = 1; i < 20000; i++) {
     },
     title: {
         left: 'center',
-        text: '大数据量面积图',
+        text: 'Temperature vs Time',
     },
     toolbox: {
         feature: {
@@ -76,7 +68,7 @@ for (var i = 1; i < 20000; i++) {
     }],
     series: [
         {
-            name: 'Chart',
+            name: 'Temperature',
             type: 'line',
             smooth: true,
             symbol: 'none',

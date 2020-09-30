@@ -15,7 +15,7 @@
         <div class="side-bar-main">
           <div class="w-icon">
             <center>
-              <rain color="#9449fe" height="150" width="150"></rain>
+              <rain color="#008cff" height="150" width="150"></rain>
             </center>
             <p class="w-title">Rain</p>
             <p class="w-desc">Light rain</p>
@@ -35,9 +35,9 @@
       </div>
       <div class="content">
         <div class="nav-bar">
-          <div class="lang">
+          <div class="lang" @click="$store.commit('toggleLang')">
             <p class="lang-title">English</p>
-            <div class="lang-dropdown">
+            <div class="lang-dropdown" v-show="$store.state.showlang">
               <ul>
                 <li @click="setLang('af')">Afrikaans</li>
                 <li @click="setLang('al')">Albanian</li>
@@ -58,12 +58,27 @@
             <fahrenheit color="black" height="10" width="10"></fahrenheit>
           </div>
 
+          <div class="tooltip">
+            <div class="forecast">
+              <forecast color="black" height="11" width="11"></forecast>
+            </div>
+            <span class="tooltiptext">Forecast</span>
+          </div>
+
+          <div class="tooltip">
+            <div class="marker">
+              <gmarker color="black" height="12" width="12"></gmarker>
+            </div>
+            <span class="tooltiptext">Google Map</span>
+          </div>
+
           <div class="avatar">
             <img src="~/assets/profile.jpg" />
           </div>
         </div>
         <div class="main-content">
-          <line-chart></line-chart>
+          <!-- <line-chart></line-chart> -->
+          <city-map></city-map>
         </div>
       </div>
     </div>
@@ -115,13 +130,13 @@ export default {
         let response = await this.$store.dispatch("getWeather", this.city);
         this.dates = response.data.list.map(list => {
           let dt = new Date(list.dt_txt);
-          return dt.getMonth() + "/" + dt.getDate() +"@"+ this._to12(dt);
+          return dt.getMonth() + "/" + dt.getDate() + "@" + this._to12(dt);
         });
 
         this.temps = response.data.list.map(list => {
           return list.main.temp;
         });
-        console.log(this.dates);
+        console.log(this.temps);
       }
     }
     // fetchWeather() {
@@ -150,6 +165,30 @@ export default {
 
 <style lang="scss">
 @include desktop {
+  .tooltip {
+    position: relative;
+    display: inline-block;
+  }
+
+  .tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: #008cff;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    margin-top: 5px;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+  }
+
+  .tooltip:hover .tooltiptext {
+    visibility: visible;
+  }
+
   .container {
     height: 100vh;
     width: 100%;
@@ -232,7 +271,10 @@ export default {
         }
       }
 
-      .nav-bar {
+      .content {
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
+        .nav-bar {
         height: 72px;
         width: 700px;
         border-top-right-radius: 10px;
@@ -247,6 +289,8 @@ export default {
           align-items: center;
           justify-content: center;
           margin: 16px;
+          box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
+          cursor: pointer;
           .lang-title {
             // display: inline-block;
             // vertical-align: middle;
@@ -282,10 +326,13 @@ export default {
           display: flex;
           align-items: center;
           justify-content: center;
+          box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
+          cursor: pointer;
         }
         .fahrenheit {
           float: left;
           margin-top: 16px;
+          margin-right: 16px;
           background: white;
           width: 30px;
           height: 30px;
@@ -293,6 +340,36 @@ export default {
           display: flex;
           align-items: center;
           justify-content: center;
+          box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
+          cursor: pointer;
+        }
+        .forecast {
+          box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
+          float: left;
+          margin-top: 16px;
+          background: white;
+          margin-right: 16px;
+          width: 30px;
+          height: 30px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+        }
+        .marker {
+          box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
+          float: left;
+          margin-top: 16px;
+          margin-right: 16px;
+          background: white;
+          width: 30px;
+          height: 30px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
         }
         .avatar {
           float: right;
@@ -309,6 +386,14 @@ export default {
           }
         }
       }
+      .main-content {
+        height: 428px;
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
+      }
+      }
+
+      
     }
   }
 }

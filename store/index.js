@@ -1,10 +1,10 @@
 export const state = () => ({
-    counter: 0
+    showlang: false,
 })
 
 export const mutations = {
-    increment(state) {
-        state.counter++
+    toggleLang(state) {
+        state.showlang = !state.showlang;
     }
 }
 

@@ -54,6 +54,10 @@ export default {
     '@nuxtjs/pwa',
     '@nuxtjs/axios',
     '@nuxtjs/style-resources',
+    ['nuxt-gmaps', {
+      key: 'AIzaSyChKw85w4hJ5WajpTjGZ8hvhIbMiWMvKUE',
+      //you can use libraries: ['places']
+    }]
   ],
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
