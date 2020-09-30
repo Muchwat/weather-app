@@ -117,9 +117,9 @@ for (var i = 1; i < 20000; i++) {
   };
 </script>
  
-<style scoped>
+<style>
   .echarts {
-    width: 100%;
+    width: 700px;
     height: 400px;
   }
 </style>
