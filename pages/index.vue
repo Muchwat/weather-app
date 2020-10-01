@@ -179,7 +179,7 @@ export default {
       this.setLanguage = this.langs[lang];
       this.$store.dispatch("switchLang", lang);
     },
-    async fetchWeather(e) {
+    fetchWeather(e) {
       if (e.key == "Enter") {
         this.$store.dispatch("getWeather", this.city);
         this.$store.dispatch("getForecast", this.city);

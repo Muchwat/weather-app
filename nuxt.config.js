@@ -54,6 +54,13 @@ export default {
     '@nuxtjs/pwa',
     '@nuxtjs/axios',
     '@nuxtjs/style-resources',
+    [
+      '@nuxtjs/component-cache',
+      {
+        max: 10000,
+        maxAge: 1000 * 60 * 60
+      }
+    ],
     ['nuxt-gmaps', {
       key: 'AIzaSyChKw85w4hJ5WajpTjGZ8hvhIbMiWMvKUE',
       //you can use libraries: ['places']
@@ -65,13 +72,16 @@ export default {
   },
 
   pwa: {
-    icon: {},
+    icon: {
+      src: '~/static/icon.png'
+    },
     meta: {
       theme_color: '#9449fe'
     },
     manifest: {
       name: 'Weather App',
-      short_name: 'Weather App',
+      description: "Simple weather app",
+      short_name: 'WeatherApp',
       lang: 'en',
       useWebmanifestExtension: false,
       start_url: '/',
