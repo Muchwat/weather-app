@@ -16,6 +16,20 @@
           <div class="city">
             <p>{{ $store.state.name }}</p>
           </div>
+
+          <div class="m-buttons">
+            <div class="m-celcius" @click="() => $store.commit('toCelcius')">
+              <celcius color="black" height="10" width="10"></celcius>
+            </div>
+
+            <div
+              class="m-fahrenheit"
+              @click="() => $store.commit('toFahrenheit')"
+            >
+              <fahrenheit color="black" height="10" width="10"></fahrenheit>
+            </div>
+          </div>
+
           <div class="w-icon">
             <center>
               <div class="w-object">
@@ -43,8 +57,18 @@
             <p class="w-title">Tempereture</p>
             <div class="value">
               <span>{{ temperature }}</span>
-              <celcius color="black" height="30" width="30" v-if="unit == 1"></celcius>
-              <fahrenheit color="black" height="30" width="30" v-if="unit == 0"></fahrenheit>
+              <celcius
+                color="black"
+                height="30"
+                width="30"
+                v-if="unit == 1"
+              ></celcius>
+              <fahrenheit
+                color="black"
+                height="30"
+                width="30"
+                v-if="unit == 0"
+              ></fahrenheit>
             </div>
           </div>
           <div class="disclaimer">
@@ -117,7 +141,7 @@ export default {
       temps: [],
       loading: false,
       errored: false,
-      setLanguage: 'English',
+      setLanguage: "English",
       langs: {
         af: "Afrikaans",
         al: "Albanian",
@@ -194,6 +218,10 @@ svg {
   }
 }
 @include desktop {
+  .disclaimer,
+  .m-buttons {
+    display: none;
+  }
   .container {
     height: 100vh;
     width: 100%;
@@ -301,9 +329,6 @@ svg {
             margin-left: 60px;
             font-size: 2rem;
             font-weight: 500;
-          }
-          .disclaimer {
-            display: none;
           }
         }
       }
@@ -471,9 +496,45 @@ svg {
           .city {
             font-size: 40px;
             font-weight: 00;
+            float: left;
+          }
+
+          .m-buttons {
+            display: inline-block;
+
+            float: right;
+            .m-celcius {
+              float: left;
+              margin-top: 16px;
+              margin-right: 16px;
+              background: white;
+              width: 30px;
+              height: 30px;
+              border-radius: 50%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
+              cursor: pointer;
+            }
+            .m-fahrenheit {
+              float: right;
+              margin-top: 16px;
+              margin-right: 16px;
+              background: white;
+              width: 30px;
+              height: 30px;
+              border-radius: 50%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
+              cursor: pointer;
+            }
           }
 
           .w-icon {
+             clear: both;
             .w-object {
               height: 130px;
               width: 130px;
