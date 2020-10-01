@@ -144,7 +144,7 @@ export default {
   },
   computed: {
     temperature() {
-      return this.$store.state.main.temp;
+      return Math.round(this.$store.state.main.temp);
     },
     unit() {
       return this.$store.state.tempUnit;

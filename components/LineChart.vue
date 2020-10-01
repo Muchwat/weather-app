@@ -16,21 +16,34 @@ export default {
     bar: {
       tooltip: {
         trigger: "axis",
+        show: false,
         position: function(pt) {
           return [pt[0], "10%"];
         }
       },
       title: {
-        left: "center",
-        text: "Temperature vs Time"
+        left: "left",
+        top: '10',
+        text: "Daily forecast (Temperature)",
+        textStyle: {
+          color: "black",
+          fontSize: "14"
+        }
       },
       toolbox: {
         feature: {
           dataZoom: {
             yAxisIndex: "none"
           },
-          restore: {},
-          saveAsImage: {}
+          restore: {
+            title: "Restore",
+            show: true
+          },
+          saveAsImage: {
+            title: "Save PNG",
+            color: "#fff",
+            show: true
+          }
         }
       },
       xAxis: {
@@ -93,7 +106,7 @@ export default {
     temps(newTemps, oldCount) {
       this.bar.series[0].data = newTemps;
     }
-  },
+  }
 };
 </script>
  
