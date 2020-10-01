@@ -33,29 +33,32 @@
                   />
                 </object>
               </div>
-            </center><br>
+            </center>
+            <br />
             <p class="w-title">{{ $store.state.weather.main }}</p>
             <p class="w-desc">{{ $store.state.weather.description }}</p>
-            
           </div>
           <br />
           <div class="temp">
             <p class="w-title">Tempereture</p>
             <div class="value">
-              <span>{{ $store.state.main.temp }}</span>
-              <celcius color="black" height="30" width="30"></celcius>
+              <span>{{ temperature }}</span>
+              <celcius color="black" height="30" width="30" v-if="unit == 1"></celcius>
+              <fahrenheit color="black" height="30" width="30" v-if="unit == 0"></fahrenheit>
             </div>
           </div>
           <div class="disclaimer">
-            <p>For more features and better experience please use a laptop or desktop computer. Thanks!</p>
+            <p>
+              For more features and better experience please use a laptop or
+              desktop computer. Thanks!
+            </p>
           </div>
-          
         </div>
       </div>
       <div class="content">
         <div class="nav-bar">
           <div class="lang" @click="$store.commit('toggleLang')">
-            <p class="lang-title">English</p>
+            <p class="lang-title">{{ setLanguage }}</p>
             <div class="lang-dropdown" v-show="$store.state.showlang">
               <ul>
                 <li @click="setLang('af')">Afrikaans</li>
@@ -69,11 +72,11 @@
             </div>
           </div>
 
-          <div class="celcius">
+          <div class="celcius" @click="() => $store.commit('toCelcius')">
             <celcius color="black" height="10" width="10"></celcius>
           </div>
 
-          <div class="fahrenheit">
+          <div class="fahrenheit" @click="() => $store.commit('toFahrenheit')">
             <fahrenheit color="black" height="10" width="10"></fahrenheit>
           </div>
 
@@ -113,7 +116,17 @@ export default {
       dates: [],
       temps: [],
       loading: false,
-      errored: false
+      errored: false,
+      setLanguage: 'English',
+      langs: {
+        af: "Afrikaans",
+        al: "Albanian",
+        ar: "Arabic",
+        en: "English",
+        fa: "Persian",
+        fr: "French",
+        gl: "Galician"
+      }
     };
   },
   async asyncData({ $axios }) {
@@ -129,16 +142,18 @@ export default {
     );
     return { response };
   },
-  methods: {
-    covert() {
-      var celcius = Math.round(parseFloat(d.main.temp) - 273.15);
-      var fahrenheit = Math.round(
-        (parseFloat(d.main.temp) - 273.15) * 1.8 + 32
-      );
+  computed: {
+    temperature() {
+      return this.$store.state.main.temp;
     },
-    async setLang(lang) {
-      let response = await this.$store.dispatch("switchLang", lang);
-      console.log(this.city, response);
+    unit() {
+      return this.$store.state.tempUnit;
+    }
+  },
+  methods: {
+    setLang(lang) {
+      this.setLanguage = this.langs[lang];
+      this.$store.dispatch("switchLang", lang);
     },
     async fetchWeather(e) {
       if (e.key == "Enter") {
@@ -261,7 +276,8 @@ svg {
           .w-icon {
             margin-top: 20px;
             .w-object {
-              height:150px; width:150px;
+              height: 150px;
+              width: 150px;
             }
           }
           .w-title {
@@ -418,7 +434,7 @@ svg {
 }
 @include phone {
   .container {
-    .w-app { 
+    .w-app {
       display: block;
       .content {
         display: none;
@@ -459,7 +475,8 @@ svg {
 
           .w-icon {
             .w-object {
-              height:130px; width:130px;
+              height: 130px;
+              width: 130px;
             }
           }
           .w-title {
@@ -471,7 +488,7 @@ svg {
             margin: 16px auto;
             font-size: 0.8rem;
             font-weight: 500;
-            opacity: .6;
+            opacity: 0.6;
           }
           .temp {
             .value {
@@ -490,8 +507,8 @@ svg {
             border-left: 5px solid #9449fe;
             border-radius: 2.5px;
             p {
-              font-size: .8rem;
-              padding-left: .5rem;
+              font-size: 0.8rem;
+              padding-left: 0.5rem;
             }
           }
         }
