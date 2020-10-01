@@ -2,7 +2,7 @@ export const state = () => ({
     showlang: false,
     screen: 'map',
     lang: 'en',
-    tempUnit: 0,
+    tempUnit: 1,
     city: 'nairobi',
     dates: [],
     temps: [],
@@ -33,6 +33,9 @@ export const mutations = {
     toggleLang(state) {
         state.showlang = !state.showlang;
     },
+    setUnit(state, data) {
+        state.tempUnit = data;
+    },
     updateWeather(state, data) {
         state.weather = data.weather[0];
         state.main = data.main;
@@ -48,20 +51,7 @@ export const mutations = {
     },
     updateScreen(state, data) {
         state.screen = data;
-    },
-    toFahrenheit(state) {
-        if (state.tempUnit == 1) {
-            state.main.temp =  Math.round((parseFloat(state.main.temp) * 9/5) + 32);
-            state.tempUnit = 0;
-        }
-    },
-    toCelcius(state) {
-        if (state.tempUnit == 0) {
-            state.main.temp = Math.round((parseFloat(state.main.temp) - 32) / 1.8);
-
-            state.tempUnit = 1;
-        }
-    },
+    }
 }
 
 export const actions = {

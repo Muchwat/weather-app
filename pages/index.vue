@@ -18,13 +18,13 @@
           </div>
 
           <div class="m-buttons">
-            <div class="m-celcius" @click="() => $store.commit('toCelcius')">
+            <div class="m-celcius" @click="() => $store.commit('setUnit', 1)">
               <celcius color="black" height="10" width="10"></celcius>
             </div>
 
             <div
               class="m-fahrenheit"
-              @click="() => $store.commit('toFahrenheit')"
+              @click="() => $store.commit('setUnit', 0)"
             >
               <fahrenheit color="black" height="10" width="10"></fahrenheit>
             </div>
@@ -96,11 +96,11 @@
             </div>
           </div>
 
-          <div class="celcius" @click="() => $store.commit('toCelcius')">
+          <div class="celcius" @click="() => $store.commit('setUnit', 1)">
             <celcius color="black" height="10" width="10"></celcius>
           </div>
 
-          <div class="fahrenheit" @click="() => $store.commit('toFahrenheit')">
+          <div class="fahrenheit" @click="() => $store.commit('setUnit', 0)">
             <fahrenheit color="black" height="10" width="10"></fahrenheit>
           </div>
 
@@ -168,7 +168,7 @@ export default {
   },
   computed: {
     temperature() {
-      return Math.round(this.$store.state.main.temp);
+      return this.convertUnit(this.$store.state.main.temp);
     },
     unit() {
       return this.$store.state.tempUnit;
@@ -188,6 +188,11 @@ export default {
     fetchForecast() {
       this.$store.commit("updateScreen", "chart");
       this.$store.dispatch("getForecast", this.city);
+    },
+    convertUnit(val) {
+      return this.$store.state.tempUnit == 1
+        ? Math.round((parseFloat(val) - 32) / 1.8)
+        : Math.round((parseFloat(val) * 9) / 5 + 32);
     }
   },
   mounted() {
@@ -534,7 +539,7 @@ svg {
           }
 
           .w-icon {
-             clear: both;
+            clear: both;
             .w-object {
               height: 130px;
               width: 130px;
