@@ -50,13 +50,10 @@ export const mutations = {
         state.screen = data;
     },
     toFahrenheit(state) {
-
         if (state.tempUnit == 1) {
             state.main.temp =  Math.round((parseFloat(state.main.temp) * 9/5) + 32);
             state.tempUnit = 0;
         }
-
-        console.log('to Fahrenheit clicked', state.tempUnit);
     },
     toCelcius(state) {
         if (state.tempUnit == 0) {
@@ -64,8 +61,6 @@ export const mutations = {
 
             state.tempUnit = 1;
         }
-
-        console.log('to celcius clicked', state.tempUnit);
     },
 }
 
