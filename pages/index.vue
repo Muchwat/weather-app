@@ -167,34 +167,41 @@ export default {
     return { response };
   },
   computed: {
+    // presents temperatur value
     temperature() {
       return this.convertUnit(this.$store.state.main.temp);
     },
+    // presents unit value
     unit() {
       return this.$store.state.tempUnit;
     }
   },
   methods: {
+    // sets language
     setLang(lang) {
       this.setLanguage = this.langs[lang];
       this.$store.dispatch("switchLang", lang);
     },
+    // fetches weather data
     fetchWeather(e) {
       if (e.key == "Enter") {
         this.$store.dispatch("getWeather", this.city);
         this.$store.dispatch("getForecast", this.city);
       }
     },
+    //fetches forecast data
     fetchForecast() {
       this.$store.commit("updateScreen", "chart");
       this.$store.dispatch("getForecast", this.city);
     },
+    //coverts teperature units to either C of F
     convertUnit(val) {
       return this.$store.state.tempUnit == 1
         ? Math.round((parseFloat(val) - 32) / 1.8)
         : Math.round((parseFloat(val) * 9) / 5 + 32);
     }
   },
+  //initializes data
   mounted() {
     this.$store.dispatch("getWeather", this.city);
     this.$store.dispatch("getForecast", this.city);
