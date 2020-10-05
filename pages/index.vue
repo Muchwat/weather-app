@@ -44,6 +44,7 @@
                     :src="
                       require(`~/assets/images/${$store.state.weather.id}.svg`)
                     "
+                    alt="image"
                   />
                 </object>
               </div>
@@ -119,7 +120,7 @@
           </div>
 
           <div class="avatar">
-            <img src="~/assets/profile.jpg" />
+            <img src="~/assets/profile.jpg" alt="profie_img"/>
           </div>
         </div>
         <div class="main-content">
