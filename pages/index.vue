@@ -469,7 +469,129 @@ svg {
     }
   }
 }
+
 @include phone {
+  .container {
+    .w-app {
+      display: block;
+      .content {
+        display: none;
+      }
+      .side-menu {
+        width: 100%;
+        height: 100%;
+        padding: 16px;
+        .search-bar {
+          width: 100%;
+          height: 40px;
+          border-radius: 20px;
+          border: 1px solid #ddd;
+          line-height: 40px;
+          margin: 16px auto;
+
+          display: inline-grid;
+          grid-template-columns: 40px auto;
+          .search-icon {
+            place-self: center;
+          }
+          .search-input {
+            width: 100%;
+            font: 400 16px "Varela Round", sans-serif;
+            border: 0;
+            box-sizing: border-box;
+            outline: none;
+            background: transparent;
+            cursor: pointer;
+          }
+        }
+
+        .side-bar-main {
+          .city {
+            font-size: 40px;
+            font-weight: 00;
+            float: left;
+          }
+
+          .m-buttons {
+            display: inline-block;
+
+            float: right;
+            .m-celcius {
+              float: left;
+              margin-top: 16px;
+              margin-right: 16px;
+              background: white;
+              width: 30px;
+              height: 30px;
+              border-radius: 50%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
+              cursor: pointer;
+            }
+            .m-fahrenheit {
+              float: right;
+              margin-top: 16px;
+              margin-right: 16px;
+              background: white;
+              width: 30px;
+              height: 30px;
+              border-radius: 50%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
+              cursor: pointer;
+            }
+          }
+
+          .w-icon {
+            clear: both;
+            .w-object {
+              height: 130px;
+              width: 130px;
+            }
+          }
+          .w-title {
+            margin: 0 auto;
+            font-size: 1rem;
+            font-weight: 500;
+          }
+          .w-desc {
+            margin: 16px auto;
+            font-size: 0.8rem;
+            font-weight: 500;
+            opacity: 0.6;
+          }
+          .temp {
+            .value {
+              font-size: 4rem;
+              font-weight: 300;
+              margin: 16px auto;
+            }
+          }
+          .city {
+            margin: 16px auto;
+            font-size: 2rem;
+            font-weight: 500;
+          }
+          .disclaimer {
+            display: block;
+            border-left: 5px solid #9449fe;
+            border-radius: 2.5px;
+            p {
+              font-size: 0.8rem;
+              padding-left: 0.5rem;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@include tablet {
   .container {
     .w-app {
       display: block;
