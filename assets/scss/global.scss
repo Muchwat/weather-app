@@ -12,22 +12,26 @@ $padding-16: 1rem;
 $padding-8: .5rem;
 $border-radius: 0.25rem;
 
+.GMap__Wrapper {
+    height: 100%;
+    border-bottom-right-radius: 10px;
+}
+
 @function color($name) {
     @return  map-get($colors, $name);
 }
 
 @mixin landscape {
-    @media screen and (orientation:landscape) {
+    @media screen and (orientation: landscape) {
         @content;
     }
 }
 
 @mixin portrait {
-    @media screen and (orientation:portrait) {
+    @media screen and (orientation: portrait) {
         @content;
     }
 }
-
 
 @mixin desktop {
     @media only screen and (min-width: ($desktop + 1)) {

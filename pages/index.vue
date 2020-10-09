@@ -423,7 +423,7 @@ svg {
             float: left;
             margin-top: 16px;
             background: white;
-            margin-right: 16px;
+            margin-right: 11px;
             width: 30px;
             height: 30px;
             border-radius: 50%;
@@ -436,7 +436,7 @@ svg {
             box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
             float: left;
             margin-top: 16px;
-            margin-right: 16px;
+            // margin-right: 16px;
             background: white;
             width: 30px;
             height: 30px;
